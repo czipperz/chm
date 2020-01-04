@@ -18,6 +18,10 @@ extern "C" {
         }                                                                      \
     } while (0)
 
+#define TEST_CASE_NAME(name) hash_map_test_##name
+#define TEST_CASE(name) static int TEST_CASE_NAME(name)(void)
+#define RUN_TEST_CASE(name) ret += TEST_CASE_NAME(name)()
+
 struct IntToIntMap {
     HASH_SET_BASE;
     int* keys;
@@ -34,9 +38,6 @@ static int compare_int(const void* _left, const void* _right) {
     const int* right = (const int*) _right;
     return *left - *right;
 }
-
-#define TEST_CASE_NAME(name) hash_map_test_##name
-#define TEST_CASE(name) static int TEST_CASE_NAME(name)(void)
 
 TEST_CASE(empty_reserve) {
     struct IntToIntMap map = {};
@@ -410,7 +411,6 @@ TEST_CASE(remove_nonexistant_then_all) {
 int main() {
     int ret = 0;
 
-#define RUN_TEST_CASE(name) ret += TEST_CASE_NAME(name)()
     RUN_TEST_CASE(empty_reserve);
     RUN_TEST_CASE(empty_get_fails);
     RUN_TEST_CASE(empty_after_reserve_get_fails);
