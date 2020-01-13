@@ -90,6 +90,22 @@ TEST_CASE(empty_remove) {
     return 0;
 }
 
+TEST_CASE(reserve_same_size_does_nothing) {
+    struct IntToIntMap map = {};
+    int* keys;
+
+    HASH_MAP_RESERVE(&map, 4, hash_int);
+    ASSERT(map.cap == 4);
+    keys = map.keys;
+
+    HASH_MAP_RESERVE(&map, 4, hash_int);
+    ASSERT(map.cap == 4);
+    ASSERT(map.keys == keys);
+
+    hash_map_drop(&map);
+    return 0;
+}
+
 TEST_CASE(get_after_insert) {
     struct IntToIntMap map = {};
     int key = 1;
@@ -415,6 +431,7 @@ int main() {
     RUN_TEST_CASE(empty_get_fails);
     RUN_TEST_CASE(empty_after_reserve_get_fails);
     RUN_TEST_CASE(empty_remove);
+    RUN_TEST_CASE(reserve_same_size_does_nothing);
     RUN_TEST_CASE(get_after_insert);
     RUN_TEST_CASE(get_after_insert_2);
     RUN_TEST_CASE(get_after_insert_2_reverse);
