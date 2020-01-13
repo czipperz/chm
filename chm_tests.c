@@ -95,11 +95,11 @@ TEST_CASE(reserve_same_size_does_nothing) {
     int* keys;
 
     HASH_MAP_RESERVE(&map, 4, hash_int);
-    ASSERT(map.cap == 4);
+    ASSERT(map.cap == 8);
     keys = map.keys;
 
     HASH_MAP_RESERVE(&map, 4, hash_int);
-    ASSERT(map.cap == 4);
+    ASSERT(map.cap == 8);
     ASSERT(map.keys == keys);
 
     hash_map_drop(&map);

@@ -70,7 +70,7 @@ void hash_map_drop(void* _hash_map) {
 void hash_map_reserve(void* _hash_map, size_t key_size, size_t value_size,
                       uint64_t extra, uint64_t (*hashf)(const void*)) {
     struct HashMap* hash_map = (struct HashMap*) _hash_map;
-    if (hash_map->count + extra >= hash_map->cap / 2) {
+    if (hash_map->count + extra > hash_map->cap / 2) {
         struct HashMap new_hash_map;
         new_hash_map.cap = next_power_of_two((hash_map->count + extra) * 2 - 1);
         new_hash_map.count = 0;
