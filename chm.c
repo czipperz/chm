@@ -140,7 +140,6 @@ int hash_map_remove(void* _hash_map, size_t key_size, size_t value_size,
     }
 
     uint64_t index = hash & (hash_map->cap - 1);
-    /* const uint64_t initial_index = index; */
     while (1) {
         if (!hash_map_is_present(hash_map, index)
             && !hash_map_is_tombstone(hash_map, index)) {
@@ -157,8 +156,5 @@ int hash_map_remove(void* _hash_map, size_t key_size, size_t value_size,
         }
 
         index = ((index + 1) & (hash_map->cap - 1));
-        /* if (index == initial_index) { */
-        /*     return 0; */
-        /* } */
     }
 }
