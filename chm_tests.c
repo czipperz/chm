@@ -20,7 +20,7 @@ extern "C" {
 
 #define TEST_CASE_NAME(name) hash_map_test_##name
 #define TEST_CASE(name) static int TEST_CASE_NAME(name)(void)
-#define RUN_TEST_CASE(name) ret += TEST_CASE_NAME(name)()
+#define RUN_TEST_CASE(name) do { if (TEST_CASE_NAME(name)()) { ret = 1; goto done; } } while (0)
 
 struct IntToIntMap {
     HASH_SET_BASE;
@@ -441,6 +441,7 @@ int main() {
     RUN_TEST_CASE(remove_all_intersperse_nonexistant);
     RUN_TEST_CASE(remove_nonexistant_then_all);
 
+done:
     if (ret == 0) {
         printf("Success\n");
     } else {
